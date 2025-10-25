@@ -1,1 +1,13 @@
-full contents of package.json
+{
+  "name": "weather-forecast-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc && sed -i 's|GEMINI_API_KEY_PLACEHOLDER|'\"$API_KEY\"'|g' index.html"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.4.0"
+  }
+}
