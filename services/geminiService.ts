@@ -2,6 +2,13 @@ import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { WeatherApiResponse } from '../types';
 import { WEATHER_CODE_MAP } from '../constants';
 
+// Declare window.GEMINI_API_KEY to avoid TypeScript errors
+declare global {
+  interface Window {
+    GEMINI_API_KEY: string;
+  }
+}
+
 /**
  * Generates a one-paragraph weather interpretation using the Gemini AI model.
  * @param weatherData The weather data object from Open-Meteo.
@@ -11,8 +18,15 @@ import { WEATHER_CODE_MAP } from '../constants';
 export async function generateWeatherInterpretation(
   weatherData: WeatherApiResponse
 ): Promise<string> {
-  // Initialize GoogleGenAI with the API key from environment variables.
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // Get API key from the globally injected variable
+  const apiKey = window.GEMINI_API_KEY;
+
+  // Validate API key to provide a helpful error message
+  if (!apiKey || apiKey === "GEMINI_API_KEY_PLACEHOLDER") {
+    throw new Error("Google Gemini API Key is not configured. Please ensure it's set in Vercel environment variables and the build command is correctly configured.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
 
   const { current_weather, daily, timezone } = weatherData;
 
@@ -63,6 +77,10 @@ export async function generateWeatherInterpretation(
     return interpretation.trim();
   } catch (error) {
     console.error("Error generating AI interpretation:", error);
+    // Provide a more user-friendly error message if it's an API key issue
+    if (error instanceof Error && error.message.includes('API Key is not configured')) {
+        throw new Error('Google Gemini API Key is missing or invalid. Please check your Vercel project environment variables and build command.');
+    }
     throw new Error(`Failed to get AI interpretation: ${(error as Error).message}`);
   }
 }

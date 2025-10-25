@@ -19,6 +19,13 @@
 </script>
 </head>
 <body class="bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center p-4">
+    <script>
+        // This global variable will hold the Gemini API key,
+        // which will be replaced during the Vercel build process.
+        // The placeholder 'GEMINI_API_KEY_PLACEHOLDER' will be replaced by the actual API_KEY
+        // from Vercel environment variables via a custom build command.
+        window.GEMINI_API_KEY = "GEMINI_API_KEY_PLACEHOLDER";
+    </script>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
 </body>
