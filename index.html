@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +20,13 @@
 </head>
 <body class="bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center p-4">
     <div id="root"></div>
+    <script>
+      // Polyfill for process.env in browser and define API_KEY from Vercel build-time replacement
+      window.process = window.process || {};
+      window.process.env = window.process.env || {};
+      // Vercel build process will replace '__VERCEL_API_KEY_PLACEHOLDER__' with the actual API_KEY
+      window.process.env.API_KEY = '__VERCEL_API_KEY_PLACEHOLDER__';
+    </script>
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>
