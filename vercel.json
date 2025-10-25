@@ -1,11 +1,5 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "build": {
-    "env": {
-      "API_KEY": "@api_key"
-    },
-    "command": "sed -i 's|__VERCEL_API_KEY_PLACEHOLDER__|'$API_KEY'|g' index.html"
-  }
+  ]
 }
