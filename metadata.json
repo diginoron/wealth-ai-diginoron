@@ -1,0 +1,5 @@
+{
+  "name": "Weather Forecast App",
+  "description": "A simple weather application that fetches and displays weather information for given coordinates using the Open-Meteo API.",
+  "requestFramePermissions": []
+}
